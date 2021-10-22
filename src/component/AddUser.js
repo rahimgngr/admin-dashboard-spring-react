@@ -166,6 +166,7 @@ function AddUser() {
               />
             </Form.Group>
           </Card.Body>
+
           {/* footer */}
           <Card.Footer style={{ textAlign: "right" }}>
             <Button
