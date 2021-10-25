@@ -4,6 +4,8 @@ import com.rahimgngr.springreactdashboard.projects.entity.ProjectEntity;
 import com.rahimgngr.springreactdashboard.projects.repository.ProjectRepo;
 import com.rahimgngr.springreactdashboard.projects.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +28,8 @@ public class ProjectController {
     }
 
     @GetMapping("/get")
-    public List<ProjectEntity> getAll() {
-        return service.getAll();
+    public Page<ProjectEntity> getAll(Pageable pageable) {
+        return service.getAll(pageable);
     }
 
     @GetMapping("/get/{id}")

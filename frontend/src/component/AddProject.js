@@ -4,14 +4,6 @@ import { Card, Form, Button, Col } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import axios from "axios";
 import ToastComponent from "./ToastComponent";
-// import moment from "moment";
-
-// const calculateDaysLeft = (startDate, endDate) => {
-//   if (!moment.isMoment(startDate)) startDate = moment(startDate);
-//   if (!moment.isMoment(endDate)) endDate = moment(endDate);
-
-//   return endDate.diff(startDate, "days");
-// };
 
 const getCurrentDate = (separator = "-") => {
   let newDate = new Date();
@@ -31,7 +23,7 @@ const values = {
   endDate: getCurrentDate(),
 };
 
-function AddProject({ children }) {
+function AddProject() {
   const [form, setForm] = useState(values);
   const [show, setShow] = useState(false);
   const [method, setMethod] = useState("");
@@ -175,6 +167,7 @@ function AddProject({ children }) {
                 required
                 type="date"
                 name="startDate"
+                min={values.startDate}
                 placeholder="Date of Start"
                 onChange={projectChange}
                 value={form.startDate}
@@ -189,6 +182,7 @@ function AddProject({ children }) {
                 type="date"
                 name="endDate"
                 placeholder="Date of end"
+                min={form.startDate}
                 onChange={projectChange}
                 value={form.endDate}
                 className={"bg-dark text-white"}
@@ -225,7 +219,6 @@ function AddProject({ children }) {
           </Card.Footer>
         </Form>
       </Card>
-      {children}
     </div>
   );
 }

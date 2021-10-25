@@ -6,31 +6,47 @@ import {
   Table,
   Button,
   FormControl,
+  ProgressBar,
 } from "react-bootstrap";
 import axios from "axios";
 import ToastComponent from "./ToastComponent";
 import { Link } from "react-router-dom";
+import moment from "moment";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+const calculateDaysLeft = (startDate, endDate) => {
+  if (!moment.isMoment(startDate)) startDate = moment(startDate);
+  if (!moment.isMoment(endDate)) endDate = moment(endDate);
+
+  return endDate.diff(startDate, "days");
+};
 
 function ProjectList() {
   const [projects, setProjects] = useState([]);
   const [show, setShow] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [projectsPerPage] = useState(5);
-
-  const lastIndex = currentPage * projectsPerPage;
-  const firstIndex = lastIndex - projectsPerPage;
-  const currentProjects = projects.slice(firstIndex, lastIndex);
-  const totalPages = Math.ceil(projects.length / projectsPerPage);
+  const [totalPages, setTotalPages] = useState([]);
+  const [totalElements, setTotalElements] = useState([]);
 
   // for get data
-  const getProject = async () => {
-    await axios("http://localhost:8080/project/get").then((res) =>
-      setProjects(res.data)
+  const getProject = async (currentpage) => {
+    currentpage -= 1;
+    await axios(
+      `http://localhost:8080/project/get?page=${currentpage}&size=${projectsPerPage}`
+    ).then(
+      (res) => (
+        setProjects(res.data.content),
+        setTotalPages(res.data.totalPages),
+        setTotalElements(res.data.totalElements),
+        setCurrentPage(res.data.number + 1)
+      )
     );
   };
+
   useEffect(() => {
-    getProject();
-  }, [projects]);
+    getProject(currentPage);
+  }, []);
 
   // delete data with spesific id
   const deleteProject = async (projectId) => {
@@ -49,22 +65,22 @@ function ProjectList() {
   // Button pagination stuff
   const firstPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(1);
+      getProject(1);
     }
   };
   const prevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      getProject(currentPage - 1);
     }
   };
   const lastPage = () => {
-    if (currentPage < Math.ceil(projects.length / projectsPerPage)) {
-      setCurrentPage(Math.ceil(projects.length / projectsPerPage));
+    if (currentPage < Math.ceil(totalElements / projectsPerPage)) {
+      getProject(Math.ceil(totalElements / projectsPerPage));
     }
   };
   const nextPage = () => {
-    if (currentPage < Math.ceil(projects.length / projectsPerPage)) {
-      setCurrentPage(currentPage + 1);
+    if (currentPage < Math.ceil(totalElements / projectsPerPage)) {
+      getProject(currentPage + 1);
     }
   };
 
@@ -91,9 +107,10 @@ function ProjectList() {
             <thead>
               <tr>
                 <th>Project Name</th>
-
                 <th>Start Date</th>
                 <th>End Date</th>
+                <th> Total Days</th>
+                <th>Progress</th>
                 <th>Actions</th>
               </tr>
               <tr></tr>
@@ -104,11 +121,22 @@ function ProjectList() {
                   <td colSpan="5">No Projects Available..</td>
                 </tr>
               ) : (
-                currentProjects.map((project) => (
+                projects.map((project) => (
                   <tr key={project.id}>
                     <td>{project.projectName}</td>
                     <td>{project.startDate}</td>
                     <td>{project.endDate}</td>
+                    <td>
+                      {calculateDaysLeft(project.startDate, project.endDate)}
+                    </td>
+                    <td>
+                      <ProgressBar
+                        now={calculateDaysLeft(
+                          project.startDate,
+                          project.endDate
+                        )}
+                      />
+                    </td>
                     <td>
                       <ButtonGroup>
                         <Link

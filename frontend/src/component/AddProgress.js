@@ -99,6 +99,7 @@ function ProgressComponent() {
                 required
                 type="date"
                 name="startedTime"
+                min={values.startedTime}
                 placeholder="Date of Start"
                 onChange={projectChange}
                 value={form.startedTime}

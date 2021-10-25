@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from "react-router-dom";
+import SearchComponent from "./SearchComponent";
 
 function NavigationBar() {
   return (
@@ -37,6 +38,7 @@ function NavigationBar() {
           <Link to="/list-progress" className="nav-link">
             Progress Info
           </Link>
+          {/* <SearchComponent /> */}
         </Nav>
       </Navbar>
     </div>
