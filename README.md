@@ -1,5 +1,5 @@
 # Dashboard - Spring Boot and Reactjs
-Admin dashboard page. It's created with spring-boot backend and reactjs frontend. 
+Admin dashboard page. It's created with spring-boot backend and reactjs frontend. Used react-bootstrap for view.
 
 ## Installation
 * First go to terminal and use **docker-compose -f docker-compose.yml up -d** under resources directory.
