@@ -1,44 +1,64 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
+import { Carousel } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.css";
+import { Link } from "react-router-dom";
 
 function WelcomeComponent() {
   return (
-    <div name="welcomeComp" style={{ height: "100vh" }}>
-      <Box name="box" style={{ margin: "132px 50px" }}>
-        <Paper
-          variant="outlined"
-          square
-          style={{ backgroundColor: "rgb(33,37,41)", color: "gray" }}
-        >
-          <br />
-          <br />
-          <h1>Welcome Page</h1>
-          <br />
-          <p style={{ marginLeft: "10px" }}>
-            What is Lorem Ipsum? Lorem Ipsum is simply dummy text of the
-            printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever since the 1500s, when an unknown
-            printer took a galley of type and scrambled it to make a type
-            specimen book. It has survived not only five centuries, but also the
-            leap into electronic typesetting, remaining essentially unchanged.
-            It was popularised in the 1960s with the release of Letraset sheets
-            containing Lorem Ipsum passages, and more recently with desktop
-            publishing software like Aldus PageMaker including versions of Lorem
-            Ipsum. Why do we use it? It is a long established fact that a reader
-            will be distracted by the readable content of a page when looking at
-            its layout. The point of using Lorem Ipsum is that it has a
-            more-or-less normal distribution of letters, as opposed to using
-            'Content here, content here', making it look like readable English.
-            Many desktop publishing packages and web page editors now use Lorem
-            Ipsum as their default model text, and a search for 'lorem ipsum'
-            will uncover many web sites still in their infancy. Various versions
-            have evolved over the years, sometimes by accident, sometimes on
-            purpose (injected humour and the like).
-          </p>
-          <br />
-        </Paper>
-      </Box>
+    <div name="welcomeComp" style={{ margin: "100px" }}>
+      <Carousel fade>
+        <Carousel.Item>
+          <Link to="/list-users">
+            {" "}
+            <img
+              className="d-block w-100"
+              src="https://www.elegantthemes.com/blog/wp-content/uploads/2021/04/add-new-user-wordpress.jpg"
+              alt="Users"
+              width="500"
+              height="500"
+            />
+          </Link>
+
+          <Carousel.Caption>
+            <h3>Users</h3>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <Link to="/list-project">
+            <img
+              className="d-block w-100"
+              src="https://images.unsplash.com/photo-1572177812156-58036aae439c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cHJvamVjdHN8ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80"
+              alt="Projects"
+              width="500"
+              height="500"
+            />
+          </Link>
+          <Carousel.Caption>
+            <h3>Projects</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+
+        <Carousel.Item>
+          <Link to="/list-progress">
+            <img
+              className="d-block w-100"
+              src="https://www.commaconsulting.com.au/imager/s3-ap-southeast-2_amazonaws_com/commaconsulting-articles/progress_ad673a4d54c08bc9c921b5784f2d8a33.jpg"
+              alt="Progress"
+              width="500"
+              height="500"
+            />
+          </Link>
+          <Carousel.Caption>
+            <h3>Progress</h3>
+            <p>
+              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+            </p>
+          </Carousel.Caption>
+        </Carousel.Item>
+      </Carousel>
     </div>
   );
 }
