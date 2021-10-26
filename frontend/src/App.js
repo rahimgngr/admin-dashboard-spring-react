@@ -9,7 +9,7 @@ import AddUser from "./component/AddUser";
 import AddProgress from "./component/AddProgress";
 import ProgressList from "./component/ProgressList";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import Login from "./component/Login";
 function App() {
   return (
     <div className="App">
@@ -17,6 +17,13 @@ function App() {
         <NavigationBar />
         <div name="content" style={{ display: "grid" }}>
           <Switch>
+            <Route
+              path="/login"
+              component={() => {
+                window.location.href = "http://localhost:8080/login";
+                return null;
+              }}
+            />
             <Route path="/add-project" component={AddProject} />
             <Route path="/edit-project/:id" component={AddProject} />
             <Route path="/list-project" component={ProjectList} />

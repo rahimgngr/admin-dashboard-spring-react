@@ -7,14 +7,21 @@ import {
   MenuItem,
   SubMenu,
   SidebarHeader,
+  SidebarFooter,
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 //import icons from react icons
 import { FaChartArea, FaList, FaUser } from "react-icons/fa";
-import { FiHome, FiArrowLeftCircle, FiArrowRightCircle } from "react-icons/fi";
+import {
+  FiHome,
+  FiArrowLeftCircle,
+  FiArrowRightCircle,
+  FiLogOut,
+} from "react-icons/fi";
 
 function NavigationBar() {
   const [menuCollapse, setMenuCollapse] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
   const sidebarCss = {
     display: "block",
     float: "left",
@@ -30,14 +37,14 @@ function NavigationBar() {
     <>
       <div id="header" style={sidebarCss}>
         <ProSidebar
-          style={{ "sidebar-collapsed-width": "80px !default" }}
+          style={{ sidebarCollapsedWidth: "80px !default" }}
           collapsed={menuCollapse}
         >
           <SidebarHeader>
             <Link to="/" className="navbar-brand">
               <p
                 style={{
-                  "font-size": "25px",
+                  fontSize: "25px",
                   color: "darkslategrey",
                   marginBottom: "0px",
                 }}
@@ -64,7 +71,7 @@ function NavigationBar() {
           <Menu iconShape="square">
             <MenuItem active={true} icon={<FiHome />}>
               <Link to="/" className="navbar-brand">
-                Dashboard
+                Home
               </Link>
             </MenuItem>
             <SubMenu title="Projects" icon={<FaList />}>
@@ -103,6 +110,13 @@ function NavigationBar() {
                 </Link>
               </MenuItem>
             </SubMenu>
+            <SidebarFooter style={{ marginTop: "480px" }}>
+              <Menu iconShape="square">
+                <MenuItem title="Logout" icon={<FiLogOut />}>
+                  <Link to="/login">LOGOUT</Link>
+                </MenuItem>
+              </Menu>
+            </SidebarFooter>
           </Menu>
         </ProSidebar>
       </div>
