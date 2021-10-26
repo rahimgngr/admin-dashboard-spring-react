@@ -23,7 +23,6 @@ public class ProjectEntity {
     @Column
     private String projectName;
 
-
     @Column
     private String startDate;
 
