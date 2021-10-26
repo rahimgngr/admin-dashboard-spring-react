@@ -29,7 +29,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/").hasAnyRole("ADMIN", "USER")
                 .and().formLogin();
+
         http.csrf().disable();
+        http.logout(httpSecurityLogoutConfigurer -> {
+            try {
+                httpSecurityLogoutConfigurer.configure(http);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Bean
