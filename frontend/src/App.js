@@ -8,8 +8,6 @@ import UserList from "./component/UserList";
 import AddUser from "./component/AddUser";
 import AddProgress from "./component/AddProgress";
 import ProgressList from "./component/ProgressList";
-
-import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
@@ -17,7 +15,7 @@ function App() {
     <div className="App">
       <Router>
         <NavigationBar />
-        <Container>
+        <div name="content" style={{ display: "grid" }}>
           <Switch>
             <Route path="/add-project" component={AddProject} />
             <Route path="/edit-project/:id" component={AddProject} />
@@ -32,7 +30,7 @@ function App() {
 
             <Route path="/" component={WelcomeComponent} />
           </Switch>
-        </Container>
+        </div>
         <FooterComponent />
       </Router>
     </div>

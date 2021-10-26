@@ -123,7 +123,7 @@ function AddProject() {
   }, [id]);
 
   return (
-    <div>
+    <div name="add-project" style={{ margin: "132px 50px" }}>
       <div style={{ display: show ? "block" : "none" }}>
         <ToastComponent
           children={{

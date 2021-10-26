@@ -37,7 +37,7 @@ function ProgressComponent() {
   useEffect(() => {
     axios
       .get("http://localhost:8080/project/get/")
-      .then((res) => setProjects(res.data));
+      .then((res) => setProjects(res.data.content));
     axios
       .get("http://localhost:8080/admin/get/")
       .then((res) => setUsers(res.data));
@@ -74,7 +74,7 @@ function ProgressComponent() {
   };
 
   return (
-    <div>
+    <div name="addprog" style={{ margin: "132px 50px" }}>
       <div style={{ display: show ? "block" : "none" }}>
         <ToastComponent
           children={{

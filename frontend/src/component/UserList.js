@@ -16,6 +16,8 @@ export default function UserList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(3);
   const [show, setShow] = useState(false);
+  const [search, setSearch] = useState("");
+  const [searchRes, setSearchRes] = useState([]);
 
   // pagination set numbers
   const lastIndex = currentPage * usersPerPage;
@@ -69,8 +71,24 @@ export default function UserList() {
     setCurrentPage(e.target.value <= totalPages ? e.target.value : totalPages);
   };
 
+  const searchChange = (e) => {
+    setSearch(([e.target.name] = e.target.value));
+
+    if (search !== "") {
+      const newUserList = users.filter((user) => {
+        return Object.values(user)
+          .join(" ")
+          .toLowerCase()
+          .includes(search.toLowerCase());
+      });
+      setSearchRes(newUserList);
+    } else {
+      setSearchRes(currentUsers);
+    }
+  };
+
   return (
-    <div>
+    <div name="userlist" style={{ margin: "132px 50px" }}>
       <Card
         className={"border border-dark bg-dark text-white"}
         style={{ margin: "45px 0" }}
@@ -84,7 +102,22 @@ export default function UserList() {
             }}
           />
         </div>
-        <Card.Header>Users List</Card.Header>
+        <Card.Header>
+          <div style={{ float: "left" }}>User List</div>
+          <div style={{ float: "right" }}>
+            <InputGroup size="sm">
+              <FormControl
+                type="search"
+                placeholder="Search"
+                name="search"
+                className="bg-dark text-white"
+                aria-label="Search"
+                onChange={searchChange}
+              />
+            </InputGroup>
+          </div>
+        </Card.Header>
+
         <Card.Body>
           <Table striped bordered hover variant="dark">
             <thead>
@@ -99,30 +132,32 @@ export default function UserList() {
                   <td colSpan="2">No Users Found..</td>
                 </tr>
               ) : (
-                currentUsers.map((user, index) => (
-                  <tr key={user.id ? user.id : index}>
-                    <td>{user.userName}</td>
-                    <td>{user.role}</td>
-                    <td>
-                      <ButtonGroup>
-                        <Link
-                          to={"/edit-user/" + user.id}
-                          className="btn btn-sm btn-outline-primary"
-                        >
-                          edit
-                        </Link>
+                (search.length < 1 ? currentUsers : searchRes).map(
+                  (user, index) => (
+                    <tr key={user.id || index}>
+                      <td>{user.userName}</td>
+                      <td>{user.role}</td>
+                      <td>
+                        <ButtonGroup>
+                          <Link
+                            to={"/edit-user/" + user.id}
+                            className="btn btn-sm btn-outline-primary"
+                          >
+                            edit
+                          </Link>
 
-                        <Button
-                          size="sm"
-                          variant="outline-danger"
-                          onClick={() => deleteUser(user.id)}
-                        >
-                          delete
-                        </Button>
-                      </ButtonGroup>
-                    </td>
-                  </tr>
-                ))
+                          <Button
+                            size="sm"
+                            variant="outline-danger"
+                            onClick={() => deleteUser(user.id)}
+                          >
+                            delete
+                          </Button>
+                        </ButtonGroup>
+                      </td>
+                    </tr>
+                  )
+                )
               )}
             </tbody>
           </Table>

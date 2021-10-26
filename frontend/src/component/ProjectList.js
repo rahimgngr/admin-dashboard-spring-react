@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React, { useEffect, useState } from "react";
 import {
   InputGroup,
@@ -14,6 +15,7 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+
 const calculateDaysLeft = (startDate, endDate) => {
   if (!moment.isMoment(startDate)) startDate = moment(startDate);
   if (!moment.isMoment(endDate)) endDate = moment(endDate);
@@ -28,6 +30,8 @@ function ProjectList() {
   const [projectsPerPage] = useState(5);
   const [totalPages, setTotalPages] = useState([]);
   const [totalElements, setTotalElements] = useState([]);
+  const [search, setSearch] = useState("");
+  const [searchRes, setSearchRes] = useState([]);
 
   // for get data
   const getProject = async (currentpage) => {
@@ -44,9 +48,11 @@ function ProjectList() {
     );
   };
 
+  // initalize get request
   useEffect(() => {
     getProject(currentPage);
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage]);
 
   // delete data with spesific id
   const deleteProject = async (projectId) => {
@@ -89,8 +95,25 @@ function ProjectList() {
     setCurrentPage(e.target.value <= totalPages ? e.target.value : totalPages);
   };
 
+  // get typed character
+  const searchChange = (e) => {
+    setSearch(e.target.value);
+
+    if (search !== "") {
+      const newProjectList = projects.filter((project) => {
+        return Object.values(project)
+          .join(" ")
+          .toLowerCase()
+          .includes(search.toLowerCase());
+      });
+      setSearchRes(newProjectList);
+    } else {
+      setSearchRes(projects);
+    }
+  };
+
   return (
-    <div style={{ heigth: "100px" }}>
+    <div name="project" style={{ margin: "132px 50px" }}>
       <div style={{ display: show ? "block" : "none" }}>
         <ToastComponent
           children={{ show: show, message: "Project Deleted!", type: "danger" }}
@@ -101,7 +124,21 @@ function ProjectList() {
         className={"border border-dark bg-dark text-white"}
         style={{ margin: "45px 0" }}
       >
-        <Card.Header>Project List</Card.Header>
+        <Card.Header>
+          <div style={{ float: "left" }}>Project List</div>
+          <div style={{ float: "right" }}>
+            <InputGroup size="sm">
+              <FormControl
+                type="search"
+                placeholder="Search"
+                name="search"
+                aria-label="Search"
+                className={"bg-dark text-white"}
+                onChange={searchChange}
+              />
+            </InputGroup>
+          </div>
+        </Card.Header>
         <Card.Body>
           <Table striped bordered hover variant="dark">
             <thead>
@@ -121,7 +158,7 @@ function ProjectList() {
                   <td colSpan="5">No Projects Available..</td>
                 </tr>
               ) : (
-                projects.map((project) => (
+                (search.length < 1 ? projects : searchRes).map((project) => (
                   <tr key={project.id}>
                     <td>{project.projectName}</td>
                     <td>{project.startDate}</td>

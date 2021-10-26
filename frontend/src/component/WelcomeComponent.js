@@ -4,8 +4,8 @@ import Box from "@mui/material/Box";
 
 function WelcomeComponent() {
   return (
-    <div>
-      <Box style={{ margin: "45px 0", display: "flex" }}>
+    <div name="welcomeComp" style={{ height: "100vh" }}>
+      <Box name="box" style={{ margin: "132px 50px" }}>
         <Paper
           variant="outlined"
           square

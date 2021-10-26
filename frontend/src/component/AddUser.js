@@ -103,7 +103,7 @@ function AddUser() {
   }, [id]);
   console.log(method);
   return (
-    <div>
+    <div name="addUser" style={{ margin: "132px 50px" }}>
       <div style={{ display: show ? "block" : "none" }}>
         <ToastComponent
           children={{

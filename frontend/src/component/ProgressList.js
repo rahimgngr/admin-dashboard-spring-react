@@ -35,7 +35,7 @@ function ProgressList() {
       });
     }
     {
-      Object.values(groupingArr).map((item, index) => {
+      Object.values(groupingArr).map((item) => {
         proje.push(item.length);
         return item;
       });
@@ -54,7 +54,7 @@ function ProgressList() {
     });
   }, [projects]);
   return (
-    <div className="App">
+    <div name="progList" style={{ margin: "30px" }}>
       <h1>Projects</h1>
       <div>
         <Line
