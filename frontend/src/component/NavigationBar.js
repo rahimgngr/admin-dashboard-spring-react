@@ -21,7 +21,7 @@ import {
 
 function NavigationBar() {
   const [menuCollapse, setMenuCollapse] = useState(false);
-  const [isLogged, setIsLogged] = useState(true);
+
   const sidebarCss = {
     display: "block",
     float: "left",
