@@ -9,7 +9,7 @@ import AddUser from "./component/AddUser";
 import AddProgress from "./component/AddProgress";
 import ProgressList from "./component/ProgressList";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./component/Login";
+
 function App() {
   return (
     <div className="App">
